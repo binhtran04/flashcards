@@ -1,14 +1,23 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import DeckList from './screens/DeckList';
 import DeckDetail from './screens/DeckDetail';
 import Quiz from './screens/Quiz';
 import NewCard from './screens/NewCard';
 import NewDeck from './screens/NewDeck';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+const Tab = createBottomTabNavigator();
+
+const Home = () => (
+  <Tab.Navigator>
+    <Tab.Screen name="DeckList" component={DeckList} />
+    <Tab.Screen name="NewDeck" component={NewDeck} />
+  </Tab.Navigator>
+);
 
 const Stack = createStackNavigator();
 
@@ -19,15 +28,6 @@ const DeckStackNav = () => (
     <Stack.Screen name="Quiz" component={Quiz} />
     <Stack.Screen name="NewCard" component={NewCard} />
   </Stack.Navigator>
-);
-
-const Tab = createBottomTabNavigator();
-
-const Home = () => (
-  <Tab.Navigator>
-    <Tab.Screen name="DeckList" component={DeckList} />
-    <Tab.Screen name="NewDeck" component={NewDeck} />
-  </Tab.Navigator>
 );
 
 function App() {
