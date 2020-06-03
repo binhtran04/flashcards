@@ -1,9 +1,16 @@
 import React from 'react';
-import { Text, View, SafeAreaView, FlatList } from 'react-native';
+import {
+  Text,
+  View,
+  SafeAreaView,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 
-const DeckList = () => {
+const DeckList = ({ navigation }) => {
   const decks = {
-    React: {
+    a1: {
+      id: 'a1',
       title: 'React',
       questions: [
         {
@@ -16,7 +23,8 @@ const DeckList = () => {
         },
       ],
     },
-    JavaScript: {
+    b1: {
+      id: 'b1',
       title: 'JavaScript',
       questions: [
         {
@@ -28,25 +36,35 @@ const DeckList = () => {
     },
   };
 
+  const handleItemSelect = (id) => {
+    navigation.navigate('DeckDetail', { id });
+  };
+
   return (
     <SafeAreaView>
       <FlatList
         data={Object.values(decks)}
         renderItem={({ item }) => {
-          return <DeckItem deck={item} />;
+          return <DeckItem deck={item} onSelect={handleItemSelect} />;
         }}
-        keyExtractor={(item) => item.title}
+        keyExtractor={(item) => item.id}
       />
     </SafeAreaView>
   );
 };
 
-const DeckItem = ({ deck }) => {
+const DeckItem = ({ deck, onSelect }) => {
   return (
-    <View>
-      <Text>{deck.title}</Text>
-      <Text>{deck.questions.length} cards</Text>
-    </View>
+    <TouchableOpacity
+      onPress={() => {
+        onSelect(deck.id);
+      }}
+    >
+      <View>
+        <Text>{deck.title}</Text>
+        <Text>{deck.questions.length} cards</Text>
+      </View>
+    </TouchableOpacity>
   );
 };
 

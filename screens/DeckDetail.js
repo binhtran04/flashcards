@@ -2,7 +2,11 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import TextButton from '../components/TextButton';
 
-const DeckDetail = () => {
+const DeckDetail = ({ navigation, route }) => {
+  React.useEffect(() => {
+    navigation.setOptions({ title: route.params.id });
+  }, [route.params.id]);
+
   const deck = {
     title: 'JavaScript',
     questions: [
@@ -16,12 +20,17 @@ const DeckDetail = () => {
   return (
     <View>
       <View>
+        <Text>{route.params.id}</Text>
         <Text>{deck.title}</Text>
         <Text>{deck.questions.length} cards</Text>
       </View>
       <View>
-        <TextButton>Start Quiz</TextButton>
-        <TextButton>New Card</TextButton>
+        <TextButton onPress={() => navigation.navigate('Quiz')}>
+          Start Quiz
+        </TextButton>
+        <TextButton onPress={() => navigation.navigate('NewCard')}>
+          New Card
+        </TextButton>
       </View>
     </View>
   );

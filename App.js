@@ -1,21 +1,40 @@
+import 'react-native-gesture-handler';
 import * as React from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import DeckList from './screens/DeckList';
 import DeckDetail from './screens/DeckDetail';
 import Quiz from './screens/Quiz';
-import NewDeck from './screens/NewDeck';
 import NewCard from './screens/NewCard';
+import NewDeck from './screens/NewDeck';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const instructions = Platform.select({
-  ios: `Press Cmd+R to reload,\nCmd+D or shake for dev menu`,
-  android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
-});
+const Stack = createStackNavigator();
 
-export default function App() {
+const DeckStackNav = () => (
+  <Stack.Navigator initialRouteName="DeckList">
+    <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
+    <Stack.Screen name="DeckDetail" component={DeckDetail} />
+    <Stack.Screen name="Quiz" component={Quiz} />
+    <Stack.Screen name="NewCard" component={NewCard} />
+  </Stack.Navigator>
+);
+
+const Tab = createBottomTabNavigator();
+
+const Home = () => (
+  <Tab.Navigator>
+    <Tab.Screen name="DeckList" component={DeckList} />
+    <Tab.Screen name="NewDeck" component={NewDeck} />
+  </Tab.Navigator>
+);
+
+function App() {
   return (
-    <View style={styles.container}>
-      <DeckList />
-    </View>
+    <NavigationContainer style={styles.container}>
+      <DeckStackNav />
+    </NavigationContainer>
   );
 }
 
@@ -37,3 +56,5 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
+export default App;
