@@ -6,35 +6,10 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
+import { useDeckContext } from '../context/DeckContex';
 
 const DeckList = ({ navigation }) => {
-  const decks = {
-    a1: {
-      id: 'a1',
-      title: 'React',
-      questions: [
-        {
-          question: 'What is React?',
-          answer: 'A library for managing user interfaces',
-        },
-        {
-          question: 'Where do you make Ajax requests in React?',
-          answer: 'The componentDidMount lifecycle event',
-        },
-      ],
-    },
-    b1: {
-      id: 'b1',
-      title: 'JavaScript',
-      questions: [
-        {
-          question: 'What is a closure?',
-          answer:
-            'The combination of a function and the lexical environment within which that function was declared.',
-        },
-      ],
-    },
-  };
+  const { decks } = useDeckContext();
 
   const handleItemSelect = (id) => {
     navigation.navigate('DeckDetail', { id });
@@ -62,7 +37,7 @@ const DeckItem = ({ deck, onSelect }) => {
     >
       <View>
         <Text>{deck.title}</Text>
-        <Text>{deck.questions.length} cards</Text>
+        <Text>{deck.cards.length} cards</Text>
       </View>
     </TouchableOpacity>
   );

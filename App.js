@@ -9,6 +9,7 @@ import DeckDetail from './screens/DeckDetail';
 import Quiz from './screens/Quiz';
 import NewCard from './screens/NewCard';
 import NewDeck from './screens/NewDeck';
+import { DeckProvider } from './context/DeckContex';
 
 const Tab = createBottomTabNavigator();
 
@@ -33,7 +34,9 @@ const DeckStackNav = () => (
 function App() {
   return (
     <NavigationContainer style={styles.container}>
-      <DeckStackNav />
+      <DeckProvider>
+        <DeckStackNav />
+      </DeckProvider>
     </NavigationContainer>
   );
 }
