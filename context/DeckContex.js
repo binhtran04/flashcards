@@ -44,6 +44,10 @@ const initialState = {
           question: 'Where do you make Ajax requests in React?',
           answer: 'The componentDidMount lifecycle event',
         },
+        {
+          question: 'React question',
+          answer: 'The answer',
+        },
       ],
     },
     b1: {
@@ -54,6 +58,10 @@ const initialState = {
           question: 'What is a closure?',
           answer:
             'The combination of a function and the lexical environment within which that function was declared.',
+        },
+        {
+          question: 'What is a const?',
+          answer: 'const is constant',
         },
       ],
     },
@@ -96,7 +104,7 @@ export const useDeckContext = () => {
       const newDeck = {
         id,
         title: deckTitle,
-        questions: [],
+        cards: [],
       };
       dispatch({ type: ADD_DECK, deck: newDeck });
     },

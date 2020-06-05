@@ -2,6 +2,9 @@ import React from 'react';
 import { Text, View, Button } from 'react-native';
 import TextButton from '../components/TextButton';
 import { useDeckContext } from '../context/DeckContex';
+import { createStackNavigator } from '@react-navigation/stack';
+import Quiz from './Quiz';
+import NewCard from './NewCard';
 
 const DeckDetail = ({ navigation, route }) => {
   const { getDeck } = useDeckContext();
@@ -12,10 +15,10 @@ const DeckDetail = ({ navigation, route }) => {
 
   React.useEffect(() => {
     navigation.setOptions({
-      title: route.params.id,
+      title: deck.title,
       headerTitle: deck.title,
     });
-  }, [route.params.id]);
+  }, [deck.title, navigation, route.params.id]);
 
   /* const deck = {
     title: 'JavaScript',
@@ -35,7 +38,9 @@ const DeckDetail = ({ navigation, route }) => {
         <Text>{deck.cards.length} cards</Text>
       </View>
       <View>
-        <TextButton onPress={() => navigation.navigate('Quiz')}>
+        <TextButton
+          onPress={() => navigation.navigate('Quiz', { id: route.params.id })}
+        >
           Start Quiz
         </TextButton>
         <TextButton
@@ -50,4 +55,18 @@ const DeckDetail = ({ navigation, route }) => {
   );
 };
 
-export default DeckDetail;
+const Stack = createStackNavigator();
+
+const DeckDetailStackNav = ({ route }) => (
+  <Stack.Navigator initialRouteName="DeckDetail" mode="modal">
+    <Stack.Screen
+      name="DeckDetail"
+      component={DeckDetail}
+      initialParams={{ id: route.params.id }}
+    />
+    <Stack.Screen name="Quiz" component={Quiz} />
+    <Stack.Screen name="NewCard" component={NewCard} />
+  </Stack.Navigator>
+);
+
+export default DeckDetailStackNav;

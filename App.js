@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import DeckList from './screens/DeckList';
-import DeckDetail from './screens/DeckDetail';
+import DeckDetailStackNav from './screens/DeckDetail';
 import Quiz from './screens/Quiz';
 import NewCard from './screens/NewCard';
 import NewDeck from './screens/NewDeck';
@@ -25,7 +25,7 @@ const Stack = createStackNavigator();
 const DeckStackNav = () => (
   <Stack.Navigator initialRouteName="DeckList">
     <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
-    <Stack.Screen name="DeckDetail" component={DeckDetail} />
+    <Stack.Screen name="DeckDetailStackNav" component={DeckDetailStackNav} />
     <Stack.Screen name="Quiz" component={Quiz} />
     <Stack.Screen name="NewCard" component={NewCard} />
   </Stack.Navigator>

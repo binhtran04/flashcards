@@ -3,14 +3,17 @@ import { StyleSheet, View, TextInput } from 'react-native';
 import TextButton from '../components/TextButton';
 import { useDeckContext } from '../context/DeckContex';
 
-const NewDeck = () => {
+const NewDeck = ({ navigation }) => {
   const [title, setTitle] = React.useState('');
   const { addNewDeck } = useDeckContext();
 
+  const reset = () => setTitle('');
+
   const handleAddNewDeck = () => {
     addNewDeck(title);
+    reset();
 
-    // TODO return home or navigate to the new deck
+    navigation.goBack();
   };
 
   return (

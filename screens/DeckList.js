@@ -12,7 +12,7 @@ const DeckList = ({ navigation }) => {
   const { decks } = useDeckContext();
 
   const handleItemSelect = (id) => {
-    navigation.navigate('DeckDetail', { id });
+    navigation.navigate('DeckDetailStackNav', { id });
   };
 
   return (
