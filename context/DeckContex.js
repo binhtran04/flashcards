@@ -3,6 +3,7 @@ import uuid from 'react-native-uuid';
 
 const ADD_DECK = 'ADD_DECK';
 const ADD_CARD = 'ADD_CARD';
+const UPDATE_CARD = 'UPDATE_CARD';
 
 const DeckContext = React.createContext();
 
@@ -19,6 +20,16 @@ const deckReducer = (state = {}, action) => {
       const { deckId, card } = action.payload;
       const deck = { ...state.decks[deckId] };
       deck.cards.push(card);
+      return {
+        ...state,
+        decks: { ...state.decks, [deckId]: deck },
+      };
+    }
+    case UPDATE_CARD: {
+      const { deckId, cardIndex, card } = action.payload;
+      const deck = { ...state.decks[deckId] };
+      deck.cards[cardIndex] = { ...deck.cards[cardIndex], ...card };
+
       return {
         ...state,
         decks: { ...state.decks, [deckId]: deck },
@@ -118,5 +129,12 @@ export const useDeckContext = () => {
     [dispatch],
   );
 
-  return { status, decks, getDeck, addNewDeck, addNewCard };
+  const updateCard = React.useCallback(
+    (deckId, cardIndex, card) => {
+      dispatch({ type: UPDATE_CARD, payload: { deckId, cardIndex, card } });
+    },
+    [dispatch],
+  );
+
+  return { status, decks, getDeck, addNewDeck, addNewCard, updateCard };
 };

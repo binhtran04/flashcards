@@ -4,7 +4,7 @@ import TextButton from '../components/TextButton';
 import { useDeckContext } from '../context/DeckContex';
 
 const Quiz = ({ route, navigation }) => {
-  const { getDeck } = useDeckContext();
+  const { getDeck, updateCard } = useDeckContext();
   const deck = getDeck(route.params.id);
   const cards = deck.cards;
   const currentIndex = route.params.currentIndex ?? 0;
@@ -19,10 +19,22 @@ const Quiz = ({ route, navigation }) => {
     });
   };
 
-  if (currentIndex === cards.length - 1) {
+  const handleIncorrect = () => {
+    updateCard(route.params.id, currentIndex, { correctness: false });
+    toNext();
+  };
+
+  const handleCorrect = () => {
+    updateCard(route.params.id, currentIndex, { correctness: true });
+    toNext();
+  };
+
+  if (currentIndex === cards.length) {
+    const correctNumber = cards.filter((c) => c.correctness).length;
+
     return (
       <View>
-        <Text>no more question</Text>
+        <Text>Score: {`${correctNumber} / ${cards.length}`}</Text>
       </View>
     );
   }
@@ -38,8 +50,8 @@ const Quiz = ({ route, navigation }) => {
         </TextButton>
       </View>
       <View>
-        <TextButton onPress={toNext}>Incorrect</TextButton>
-        <TextButton onPress={toNext}>Correct</TextButton>
+        <TextButton onPress={handleIncorrect}>Incorrect</TextButton>
+        <TextButton onPress={handleCorrect}>Correct</TextButton>
       </View>
     </View>
   );
