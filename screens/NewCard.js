@@ -3,14 +3,17 @@ import { StyleSheet, TextInput, View } from 'react-native';
 import TextButton from '../components/TextButton';
 import { useDeckContext } from '../context/DeckContex';
 import { green, white, gray } from '../utils/colors';
+import storage from '../utils/storage';
 
 const NewCard = ({ route, navigation }) => {
   const [question, setQuestion] = React.useState('');
   const [answer, setAnswer] = React.useState('');
   const { addNewCard } = useDeckContext();
 
-  const handleAddNewCard = () => {
-    addNewCard(route.params.id, { question, answer });
+  const handleAddNewCard = async () => {
+    const card = { question, answer };
+    await storage.saveCardToDeck(route.params.id, card);
+    addNewCard(route.params.id, card);
     navigation.goBack();
   };
 

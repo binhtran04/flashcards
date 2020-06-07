@@ -1,6 +1,9 @@
 import React from 'react';
 import uuid from 'react-native-uuid';
+import { getDecks } from '../utils/storage';
+import AsyncStorage from '@react-native-community/async-storage';
 
+const LOAD_DECKS = 'LOAD_DECKS';
 const ADD_DECK = 'ADD_DECK';
 const ADD_CARD = 'ADD_CARD';
 const UPDATE_CARD = 'UPDATE_CARD';
@@ -9,6 +12,13 @@ const DeckContext = React.createContext();
 
 const deckReducer = (state = {}, action) => {
   switch (action.type) {
+    case LOAD_DECKS: {
+      return {
+        ...state,
+        status: 'initialized',
+        decks: action.payload,
+      };
+    }
     case ADD_DECK: {
       const newDeck = action.deck;
       return {
@@ -42,48 +52,18 @@ const deckReducer = (state = {}, action) => {
 
 const initialState = {
   status: 'initializing',
-  decks: {
-    a1: {
-      id: 'a1',
-      title: 'React',
-      cards: [
-        {
-          question: 'What is React?',
-          answer: 'A library for managing user interfaces',
-        },
-        {
-          question: 'Where do you make Ajax requests in React?',
-          answer: 'The componentDidMount lifecycle event',
-        },
-        {
-          question: 'React question',
-          answer: 'The answer',
-        },
-      ],
-    },
-    b1: {
-      id: 'b1',
-      title: 'JavaScript',
-      cards: [
-        {
-          question: 'What is a closure?',
-          answer:
-            'The combination of a function and the lexical environment within which that function was declared.',
-        },
-        {
-          question: 'What is a const?',
-          answer: 'const is constant',
-        },
-      ],
-    },
-  },
+  decks: {},
 };
 
 export const DeckProvider = (props) => {
   const [state, dispatch] = React.useReducer(deckReducer, initialState);
 
-  // TODO initialize the state by getting the data from AsyncStore
-  // React.useEffect
+  React.useEffect(() => {
+    /* getDecks().then((decks) => {
+      dispatch({ type: LOAD_DECKS, payload: decks });
+    }); */
+    AsyncStorage.clear();
+  }, []);
 
   const value = React.useMemo(() => {
     return { state, dispatch };
@@ -110,14 +90,8 @@ export const useDeckContext = () => {
   );
 
   const addNewDeck = React.useCallback(
-    (deckTitle) => {
-      const id = uuid.v4();
-      const newDeck = {
-        id,
-        title: deckTitle,
-        cards: [],
-      };
-      dispatch({ type: ADD_DECK, deck: newDeck });
+    (deck) => {
+      dispatch({ type: ADD_DECK, deck });
     },
     [dispatch],
   );

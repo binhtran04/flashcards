@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import TextButton from '../components/TextButton';
 import { useDeckContext } from '../context/DeckContex';
-import { createStackNavigator } from '@react-navigation/stack';
 import { gray, red, white, orange, green } from '../utils/colors';
+import storage from '../utils/storage';
 
 const Quiz = ({ route, navigation }) => {
   const { getDeck, updateCard } = useDeckContext();
@@ -21,12 +21,18 @@ const Quiz = ({ route, navigation }) => {
     });
   };
 
-  const handleIncorrect = () => {
+  const handleIncorrect = async () => {
+    await storage.modifiCardInDeck(route.params.id, currentIndex, {
+      correctness: false,
+    });
     updateCard(route.params.id, currentIndex, { correctness: false });
     toNext();
   };
 
-  const handleCorrect = () => {
+  const handleCorrect = async () => {
+    await storage.modifiCardInDeck(route.params.id, currentIndex, {
+      correctness: true,
+    });
     updateCard(route.params.id, currentIndex, { correctness: true });
     toNext();
   };

@@ -3,6 +3,7 @@ import { StyleSheet, View, TextInput } from 'react-native';
 import TextButton from '../components/TextButton';
 import { useDeckContext } from '../context/DeckContex';
 import { green, gray } from '../utils/colors';
+import storage from '../utils/storage';
 
 const NewDeck = ({ navigation }) => {
   const [title, setTitle] = React.useState('');
@@ -11,10 +12,12 @@ const NewDeck = ({ navigation }) => {
   const reset = () => setTitle('');
 
   const handleAddNewDeck = () => {
-    addNewDeck(title);
-    reset();
+    storage.saveNewDeck(title).then((newDeck) => {
+      addNewDeck(newDeck);
+      reset();
 
-    navigation.goBack();
+      navigation.goBack();
+    });
   };
 
   return (

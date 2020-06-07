@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text, View, Button, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import TextButton from '../components/TextButton';
 import { useDeckContext } from '../context/DeckContex';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import Quiz from './Quiz';
 import NewCard from './NewCard';
-import { pink, orange, green } from '../utils/colors';
+import { orange, green } from '../utils/colors';
 
 const DeckDetail = ({ navigation, route }) => {
   const { getDeck } = useDeckContext();

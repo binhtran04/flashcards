@@ -1,14 +1,13 @@
 import React from 'react';
 import {
   Text,
-  View,
   SafeAreaView,
   FlatList,
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
 import { useDeckContext } from '../context/DeckContex';
-import { lightPurp, pink } from '../utils/colors';
+import { pink } from '../utils/colors';
 
 const DeckList = ({ navigation }) => {
   const { decks } = useDeckContext();
@@ -20,13 +19,19 @@ const DeckList = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.heading}>Decks</Text>
-      <FlatList
-        data={Object.values(decks)}
-        renderItem={({ item }) => {
-          return <DeckItem deck={item} onSelect={handleItemSelect} />;
-        }}
-        keyExtractor={(item) => item.id}
-      />
+      {Object.keys(decks).length === 0 ? (
+        <Text style={styles.noDeck}>
+          You have no Deck. Click New Deck to create a deck
+        </Text>
+      ) : (
+        <FlatList
+          data={Object.values(decks)}
+          renderItem={({ item }) => {
+            return <DeckItem deck={item} onSelect={handleItemSelect} />;
+          }}
+          keyExtractor={(item) => item.id}
+        />
+      )}
     </SafeAreaView>
   );
 };
@@ -48,6 +53,11 @@ const DeckItem = ({ deck, onSelect }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  noDeck: {
+    fontSize: 24,
+    marginVertical: 8,
+    marginHorizontal: 16,
   },
   heading: {
     fontSize: 48,
