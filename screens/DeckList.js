@@ -5,8 +5,10 @@ import {
   SafeAreaView,
   FlatList,
   TouchableOpacity,
+  StyleSheet,
 } from 'react-native';
 import { useDeckContext } from '../context/DeckContex';
+import { lightPurp, pink } from '../utils/colors';
 
 const DeckList = ({ navigation }) => {
   const { decks } = useDeckContext();
@@ -16,7 +18,8 @@ const DeckList = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.heading}>Decks</Text>
       <FlatList
         data={Object.values(decks)}
         renderItem={({ item }) => {
@@ -34,13 +37,35 @@ const DeckItem = ({ deck, onSelect }) => {
       onPress={() => {
         onSelect(deck.id);
       }}
+      style={styles.item}
     >
-      <View>
-        <Text>{deck.title}</Text>
-        <Text>{deck.cards.length} cards</Text>
-      </View>
+      <Text style={styles.title}>{deck.title}</Text>
+      <Text style={styles.cardNumber}>{deck.cards.length} cards</Text>
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  heading: {
+    fontSize: 48,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  item: {
+    padding: 20,
+    backgroundColor: pink,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 32,
+  },
+  cardNumber: {
+    fontSize: 16,
+  },
+});
 
 export default DeckList;
