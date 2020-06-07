@@ -74,6 +74,19 @@ const styles = StyleSheet.create({
   },
 });
 
+const ModalClose = ({ onPress }) => {
+  return (
+    <Ionicons
+      name="ios-close"
+      size={32}
+      onPress={onPress}
+      style={{
+        marginLeft: 10,
+      }}
+    />
+  );
+};
+
 const Stack = createStackNavigator();
 
 const DeckDetailStackNav = ({ route, navigation }) => (
@@ -94,11 +107,7 @@ const DeckDetailStackNav = ({ route, navigation }) => (
       options={{
         headerStatusBarHeight: 0,
         headerLeft: () => (
-          <Ionicons
-            name="ios-close"
-            size={24}
-            onPress={() => navigation.navigate('DeckDetail')}
-          />
+          <ModalClose onPress={() => navigation.navigate('DeckDetail')} />
         ),
       }}
     />
@@ -109,11 +118,7 @@ const DeckDetailStackNav = ({ route, navigation }) => (
         headerTitle: 'Card',
         headerStatusBarHeight: 0,
         headerLeft: () => (
-          <Ionicons
-            name="ios-close"
-            size={24}
-            onPress={() => navigation.navigate('DeckDetail')}
-          />
+          <ModalClose onPress={() => navigation.navigate('DeckDetail')} />
         ),
       }}
     />
