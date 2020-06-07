@@ -10,6 +10,7 @@ import Quiz from './screens/Quiz';
 import NewCard from './screens/NewCard';
 import NewDeck from './screens/NewDeck';
 import { DeckProvider } from './context/DeckContex';
+import { blue, white } from './utils/colors';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,11 +24,23 @@ const Home = () => (
 const Stack = createStackNavigator();
 
 const DeckStackNav = () => (
-  <Stack.Navigator initialRouteName="DeckList">
+  <Stack.Navigator
+    initialRouteName="DeckList"
+    screenOptions={{
+      headerStyle: { backgroundColor: blue },
+      headerTintColor: white,
+    }}
+  >
     <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
-    <Stack.Screen name="DeckDetailStackNav" component={DeckDetailStackNav} />
-    <Stack.Screen name="Quiz" component={Quiz} />
-    <Stack.Screen name="NewCard" component={NewCard} />
+    <Stack.Screen
+      name="DeckDetailStackNav"
+      component={DeckDetailStackNav}
+      options={{
+        headerTitle: null,
+      }}
+    />
+    {/*  <Stack.Screen name="Quiz" component={Quiz} />
+    <Stack.Screen name="NewCard" component={NewCard} /> */}
   </Stack.Navigator>
 );
 

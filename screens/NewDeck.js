@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
 import TextButton from '../components/TextButton';
 import { useDeckContext } from '../context/DeckContex';
+import { green, gray } from '../utils/colors';
 
 const NewDeck = ({ navigation }) => {
   const [title, setTitle] = React.useState('');
@@ -17,17 +18,39 @@ const NewDeck = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <TextInput
         placeholder="Deck title"
         value={title}
         onChangeText={setTitle}
+        style={styles.input}
       />
-      <TextButton onPress={handleAddNewDeck}>Add Deck</TextButton>
+      <TextButton
+        disabled={!title}
+        style={title ? styles.btnEnabled : styles.btnDisabled}
+        onPress={handleAddNewDeck}
+      >
+        Add Deck
+      </TextButton>
     </View>
   );
 };
 
-export default NewDeck;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  input: {
+    padding: 20,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#000',
+  },
+  btnEnabled: {
+    backgroundColor: green,
+  },
+  btnDisabled: {
+    backgroundColor: gray,
+  },
+});
 
-const styles = StyleSheet.create({});
+export default NewDeck;

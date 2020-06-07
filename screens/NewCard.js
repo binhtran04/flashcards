@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import TextButton from '../components/TextButton';
 import { useDeckContext } from '../context/DeckContex';
+import { green, white, gray } from '../utils/colors';
 
 const NewCard = ({ route, navigation }) => {
   const [question, setQuestion] = React.useState('');
@@ -14,22 +15,46 @@ const NewCard = ({ route, navigation }) => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <TextInput
+        style={styles.input}
         placeholder="Questions ...?"
         value={question}
         onChangeText={setQuestion}
       />
       <TextInput
+        style={styles.input}
         placeholder="Answer ..."
         value={answer}
         onChangeText={setAnswer}
       />
-      <TextButton onPress={handleAddNewCard}>Add new Card</TextButton>
+      <TextButton
+        style={!question || !answer ? styles.btnDisabled : styles.btnEnabled}
+        onPress={handleAddNewCard}
+        disabled={!question || !answer}
+        textColor={white}
+      >
+        Add new Card
+      </TextButton>
     </View>
   );
 };
 
-export default NewCard;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  input: {
+    padding: 20,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#000',
+  },
+  btnEnabled: {
+    backgroundColor: green,
+  },
+  btnDisabled: {
+    backgroundColor: gray,
+  },
+});
 
-const styles = StyleSheet.create({});
+export default NewCard;
