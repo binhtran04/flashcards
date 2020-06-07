@@ -1,23 +1,55 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import DeckList from './screens/DeckList';
 import DeckDetailStackNav from './screens/DeckDetail';
-import Quiz from './screens/Quiz';
-import NewCard from './screens/NewCard';
 import NewDeck from './screens/NewDeck';
 import { DeckProvider } from './context/DeckContex';
 import { blue, white } from './utils/colors';
+import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
 const Home = () => (
-  <Tab.Navigator>
-    <Tab.Screen name="DeckList" component={DeckList} />
-    <Tab.Screen name="NewDeck" component={NewDeck} />
+  <Tab.Navigator
+    tabBarOptions={{
+      activeTintColor: blue,
+      style: {
+        height: 86,
+        backgroundColor: white,
+        shadowColor: 'rgba(0, 0, 0, 0.24)',
+        shadowOffset: {
+          width: 0,
+          height: 3,
+        },
+        shadowRadius: 6,
+        shadowOpacity: 1,
+      },
+    }}
+  >
+    <Tab.Screen
+      name="DeckList"
+      component={DeckList}
+      options={{
+        tabBarLabel: 'Deck List',
+        tabBarIcon: ({ tintColor }) => (
+          <Ionicons name="ios-list" size={30} color={tintColor} />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="NewDeck"
+      component={NewDeck}
+      options={{
+        tabBarLabel: 'New Deck',
+        tabBarIcon: ({ tintColor }) => (
+          <Ionicons name="ios-add" size={30} color={tintColor} />
+        ),
+      }}
+    />
   </Tab.Navigator>
 );
 
@@ -39,8 +71,6 @@ const DeckStackNav = () => (
         headerTitle: null,
       }}
     />
-    {/*  <Stack.Screen name="Quiz" component={Quiz} />
-    <Stack.Screen name="NewCard" component={NewCard} /> */}
   </Stack.Navigator>
 );
 
