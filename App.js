@@ -10,14 +10,14 @@ import NewDeck from './screens/NewDeck';
 import { DeckProvider } from './context/DeckContex';
 import { blue, white } from './utils/colors';
 import { Ionicons } from '@expo/vector-icons';
-import { setLocalNotification, createNotification } from './utils/notification';
-import { Notifications } from 'expo';
+import { setLocalNotification } from './utils/notification';
 
 const Tab = createBottomTabNavigator();
 
 const Home = () => (
   <Tab.Navigator
     tabBarOptions={{
+      initialRouteName: 'DeckList',
       activeTintColor: blue,
       style: {
         height: 86,
@@ -57,24 +57,26 @@ const Home = () => (
 
 const Stack = createStackNavigator();
 
-const DeckStackNav = () => (
-  <Stack.Navigator
-    initialRouteName="DeckList"
-    screenOptions={{
-      headerStyle: { backgroundColor: blue },
-      headerTintColor: white,
-    }}
-  >
-    <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
-    <Stack.Screen
-      name="DeckDetailStackNav"
-      component={DeckDetailStackNav}
-      options={{
-        headerTitle: null,
+const DeckStackNav = (props) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerStyle: { backgroundColor: blue },
+        headerTintColor: white,
       }}
-    />
-  </Stack.Navigator>
-);
+    >
+      <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
+      <Stack.Screen
+        name="DeckDetailStackNav"
+        component={DeckDetailStackNav}
+        options={{
+          headerTitle: 'Deck',
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 function App() {
   React.useEffect(() => {

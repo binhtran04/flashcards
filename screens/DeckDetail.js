@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import TextButton from '../components/TextButton';
 import { useDeckContext } from '../context/DeckContex';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import Quiz from './Quiz';
 import NewCard from './NewCard';
-import { orange, green } from '../utils/colors';
+import { orange, green, white } from '../utils/colors';
 
 const DeckDetail = ({ navigation, route }) => {
   const { getDeck } = useDeckContext();
@@ -89,40 +89,59 @@ const ModalClose = ({ onPress }) => {
 
 const Stack = createStackNavigator();
 
-const DeckDetailStackNav = ({ route, navigation }) => (
-  <Stack.Navigator
-    initialRouteName="DeckDetail"
-    mode="modal"
-    screenOptions={{}}
-  >
-    <Stack.Screen
-      name="DeckDetail"
-      component={DeckDetail}
-      initialParams={{ id: route.params.id }}
-      options={{ headerShown: false }}
-    />
-    <Stack.Screen
-      name="Quiz"
-      component={Quiz}
-      options={{
-        headerStatusBarHeight: 0,
-        headerLeft: () => (
-          <ModalClose onPress={() => navigation.navigate('DeckDetail')} />
-        ),
-      }}
-    />
-    <Stack.Screen
-      name="NewCard"
-      component={NewCard}
-      options={{
-        headerTitle: 'Card',
-        headerStatusBarHeight: 0,
-        headerLeft: () => (
-          <ModalClose onPress={() => navigation.navigate('DeckDetail')} />
-        ),
-      }}
-    />
-  </Stack.Navigator>
-);
+const DeckDetailStackNav = ({ route, navigation }) => {
+  React.useEffect(() => {
+    navigation.setOptions({
+      headerLeft: ({ label }) => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('DeckList')}
+          style={{ flexDirection: 'row', alignItems: 'center' }}
+        >
+          <Ionicons
+            name="ios-arrow-back"
+            size={32}
+            color="white"
+            style={{ paddingLeft: 10 }}
+          />
+          <Text style={{ paddingLeft: 10, color: white, fontSize: 18 }}>
+            {label}
+          </Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, []);
+
+  return (
+    <Stack.Navigator initialRouteName="DeckDetail" mode="modal">
+      <Stack.Screen
+        name="DeckDetail"
+        component={DeckDetail}
+        initialParams={{ id: route.params.id }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Quiz"
+        component={Quiz}
+        options={{
+          headerStatusBarHeight: 0,
+          headerLeft: () => (
+            <ModalClose onPress={() => navigation.navigate('DeckDetail')} />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="NewCard"
+        component={NewCard}
+        options={{
+          headerTitle: 'Card',
+          headerStatusBarHeight: 0,
+          headerLeft: () => (
+            <ModalClose onPress={() => navigation.navigate('DeckDetail')} />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 export default DeckDetailStackNav;

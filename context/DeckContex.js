@@ -1,7 +1,5 @@
 import React from 'react';
-import uuid from 'react-native-uuid';
 import { getDecks } from '../utils/storage';
-import AsyncStorage from '@react-native-community/async-storage';
 
 const LOAD_DECKS = 'LOAD_DECKS';
 const ADD_DECK = 'ADD_DECK';
@@ -59,10 +57,9 @@ export const DeckProvider = (props) => {
   const [state, dispatch] = React.useReducer(deckReducer, initialState);
 
   React.useEffect(() => {
-    /* getDecks().then((decks) => {
+    getDecks().then((decks) => {
       dispatch({ type: LOAD_DECKS, payload: decks });
-    }); */
-    AsyncStorage.clear();
+    });
   }, []);
 
   const value = React.useMemo(() => {

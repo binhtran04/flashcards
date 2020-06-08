@@ -16,7 +16,7 @@ const NewDeck = ({ navigation }) => {
       addNewDeck(newDeck);
       reset();
 
-      navigation.goBack();
+      navigation.navigate('DeckDetailStackNav', { id: newDeck.id });
     });
   };
 
@@ -33,7 +33,7 @@ const NewDeck = ({ navigation }) => {
         style={title ? styles.btnEnabled : styles.btnDisabled}
         onPress={handleAddNewDeck}
       >
-        Add Deck
+        Create Deck
       </TextButton>
     </View>
   );

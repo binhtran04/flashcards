@@ -58,6 +58,29 @@ const Quiz = ({ route, navigation }) => {
         <Text style={styles.score}>
           Score: {`${correctNumber} / ${cards.length}`}
         </Text>
+        <View style={styles.btnWrapper}>
+          <TextButton
+            style={{ backgroundColor: red }}
+            textColor={white}
+            onPress={() => {
+              navigation.navigate('DeckDetail');
+            }}
+          >
+            Close
+          </TextButton>
+          <TextButton
+            style={{ backgroundColor: orange }}
+            textColor={white}
+            onPress={() => {
+              navigation.replace('Quiz', {
+                ...route.params,
+                currentIndex: 0,
+              });
+            }}
+          >
+            Try again
+          </TextButton>
+        </View>
       </View>
     );
   }
