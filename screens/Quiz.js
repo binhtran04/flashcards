@@ -4,6 +4,10 @@ import TextButton from '../components/TextButton';
 import { useDeckContext } from '../context/DeckContex';
 import { gray, red, white, orange, green } from '../utils/colors';
 import storage from '../utils/storage';
+import {
+  clearLocalNotification,
+  setLocalNotification,
+} from '../utils/notification';
 
 const Quiz = ({ route, navigation }) => {
   const { getDeck, updateCard } = useDeckContext();
@@ -13,6 +17,15 @@ const Quiz = ({ route, navigation }) => {
   const currentCard = cards[currentIndex];
 
   const [showAnswer, setShowAnswer] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isQuizCompleted()) {
+      clearLocalNotification().then(setLocalNotification);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const isQuizCompleted = () => currentIndex === cards.length;
 
   const toNext = () => {
     navigation.push('Quiz', {
@@ -37,7 +50,7 @@ const Quiz = ({ route, navigation }) => {
     toNext();
   };
 
-  if (currentIndex === cards.length) {
+  if (isQuizCompleted()) {
     const correctNumber = cards.filter((c) => c.correctness).length;
 
     return (

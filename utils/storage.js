@@ -1,14 +1,14 @@
-import AsynStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 import uuid from 'react-native-uuid';
 
 export const DECKS_STORAGE_KEY = 'flashcards:decks';
 
 export const saveDecks = (data) => {
-  return AsynStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
+  return AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
 };
 
 export const getDecks = () => {
-  return AsynStorage.getItem(DECKS_STORAGE_KEY).then((decks) =>
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then((decks) =>
     decks !== null ? JSON.parse(decks) : {},
   );
 };

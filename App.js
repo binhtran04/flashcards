@@ -10,6 +10,8 @@ import NewDeck from './screens/NewDeck';
 import { DeckProvider } from './context/DeckContex';
 import { blue, white } from './utils/colors';
 import { Ionicons } from '@expo/vector-icons';
+import { setLocalNotification, createNotification } from './utils/notification';
+import { Notifications } from 'expo';
 
 const Tab = createBottomTabNavigator();
 
@@ -75,6 +77,10 @@ const DeckStackNav = () => (
 );
 
 function App() {
+  React.useEffect(() => {
+    setLocalNotification();
+  }, []);
+
   return (
     <NavigationContainer style={styles.container}>
       <DeckProvider>
