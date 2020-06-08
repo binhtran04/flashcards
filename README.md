@@ -27,4 +27,8 @@ Start the development for ios using react-native
 
 Start the development for android using react-native
 
-Check [package.json](package.json) for more scripts
+## Troubleshooting
+
+When encounter an error, you can try update expo-cli then update the packages. The packages has to be compatible with expo sdk.
+
+`npm install -g expo-cli` then `expo update`
